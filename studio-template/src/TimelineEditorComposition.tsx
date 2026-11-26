@@ -130,6 +130,7 @@ const TimelineAudioLayer: React.FC<{ readonly track: TimelineAudio }> = ({
 }) => {
   return (
     <Sequence
+      name={`🎵 Áudio: ${track.src}`}
       from={track.startFrame}
       durationInFrames={track.durationInFrames}
       layout="none"
@@ -173,15 +174,21 @@ export const TimelineEditorComposition: React.FC<TimelineData> = ({
   texts,
   audioTracks,
 }) => {
+  const { durationInFrames } = useVideoConfig();
   const videoFilter = `brightness(${colorGrade.brightness}) contrast(${colorGrade.contrast}) saturate(${colorGrade.saturate})`;
 
   return (
     <AbsoluteFill style={{ backgroundColor }}>
-      <AbsoluteFill style={{ filter: videoFilter }}>
+      <Sequence
+        name="🎬 Vídeo & Cor"
+        durationInFrames={durationInFrames}
+        style={{ filter: videoFilter }}
+      >
         <Series>
           {clips.map((clip) => (
             <Series.Sequence
               key={clip.id}
+              name={`🎞️ ${clip.id}: ${clip.src}`}
               durationInFrames={clip.durationInFrames}
             >
               <OffthreadVideo
@@ -200,20 +207,23 @@ export const TimelineEditorComposition: React.FC<TimelineData> = ({
             </Series.Sequence>
           ))}
         </Series>
-      </AbsoluteFill>
+      </Sequence>
 
       {colorGrade.vignette > 0 && (
-        <AbsoluteFill
-          style={{
-            pointerEvents: "none",
-            background: `radial-gradient(circle at center, rgba(0,0,0,0) 52%, rgba(0,0,0,${colorGrade.vignette}) 100%)`,
-          }}
-        />
+        <Sequence name="🌑 Vinheta" durationInFrames={durationInFrames}>
+          <AbsoluteFill
+            style={{
+              pointerEvents: "none",
+              background: `radial-gradient(circle at center, rgba(0,0,0,0) 52%, rgba(0,0,0,${colorGrade.vignette}) 100%)`,
+            }}
+          />
+        </Sequence>
       )}
 
       {texts.map((item) => (
         <Sequence
           key={item.id}
+          name={`✍️ Texto: ${item.text}`}
           from={item.startFrame}
           durationInFrames={item.durationInFrames}
           layout="none"
