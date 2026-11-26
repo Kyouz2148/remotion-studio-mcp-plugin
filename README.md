@@ -11,11 +11,11 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Antigravity-Plugin%20%2B%20Skill-3186FF?style=for-the-badge" alt="Antigravity Plugin" />
-  <img src="https://img.shields.io/badge/Remotion-4.x-0B84F3?style=for-the-badge" alt="Remotion" />
-  <img src="https://img.shields.io/badge/MCP-Streamable%20HTTP-10B981?style=for-the-badge" alt="MCP Streamable HTTP" />
-  <img src="https://img.shields.io/badge/Node.js-20%2B%20LTS-339933?style=for-the-badge" alt="Node.js" />
-  <img src="https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge" alt="MIT License" />
+  <img src="./assets/badges/antigravity.svg" alt="Antigravity Plugin + Skill" />
+  <img src="./assets/badges/remotion.svg" alt="Remotion 4.x" />
+  <img src="./assets/badges/mcp.svg" alt="MCP Streamable HTTP" />
+  <img src="./assets/badges/node.svg" alt="Node.js 20+ LTS" />
+  <img src="./assets/badges/license.svg" alt="MIT License" />
 </p>
 
 ---
