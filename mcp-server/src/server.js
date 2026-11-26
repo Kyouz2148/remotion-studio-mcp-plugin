@@ -276,30 +276,77 @@ function createMcpServer() {
         .replace(/^src\//, "");
       const fullCompPath = safeResolveInside(SRC_DIR, relFromSrc);
 
+      const schemaExport = `${compositionId}Schema`;
+      const defaultsExport = `${compositionId}Defaults`;
       const defaultCode = `import React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
+import {
+  AbsoluteFill,
+  Sequence,
+  interpolate,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
+import { z } from "zod";
 
-export const ${compositionId}: React.FC = () => {
+export const ${schemaExport} = z.object({
+  title: z.string(),
+  subtitle: z.string(),
+  backgroundColor: z.string(),
+  textColor: z.string(),
+  fontSize: z.number().min(16).max(180),
+});
+
+export type ${compositionId}Props = z.infer<typeof ${schemaExport}>;
+
+export const ${defaultsExport}: ${compositionId}Props = {
+  title: "${compositionId}",
+  subtitle: "Editável no painel Props ({}) ou na timeline",
+  backgroundColor: "#0D0E11",
+  textColor: "#F4F1EA",
+  fontSize: 64,
+};
+
+export const ${compositionId}: React.FC<${compositionId}Props> = ({
+  title,
+  subtitle,
+  backgroundColor,
+  textColor,
+  fontSize,
+}) => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
-  const opacity = interpolate(frame, [0, 20, durationInFrames - 20, durationInFrames], [0, 1, 1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  const opacity = interpolate(
+    frame,
+    [0, 20, Math.max(21, durationInFrames - 20), durationInFrames],
+    [0, 1, 1, 0],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    },
+  );
 
   return (
-    <AbsoluteFill
-      style={{
-        backgroundColor: "#0D0E11",
-        color: "#F4F1EA",
-        alignItems: "center",
-        justifyContent: "center",
-        fontFamily: '"Segoe UI Light", Inter, sans-serif',
-        fontSize: 64,
-        opacity,
-      }}
-    >
-      ${compositionId}
+    <AbsoluteFill style={{ backgroundColor }}>
+      <Sequence name="✍️ Título Principal" durationInFrames={durationInFrames}>
+        <AbsoluteFill
+          style={{
+            color: textColor,
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+            gap: 12,
+            fontFamily: '"Segoe UI Light", Inter, sans-serif',
+            opacity,
+          }}
+        >
+          <div style={{ fontSize, fontWeight: 300 }}>{title}</div>
+          {subtitle ? (
+            <div style={{ fontSize: Math.round(fontSize * 0.34), opacity: 0.72 }}>
+              {subtitle}
+            </div>
+          ) : null}
+        </AbsoluteFill>
+      </Sequence>
     </AbsoluteFill>
   );
 };
@@ -311,12 +358,26 @@ export const ${compositionId}: React.FC = () => {
       const importPath = `./${relFromSrc.replace(/\.(tsx|ts|jsx|js)$/, "")}`;
       let rootContent = await fs.readFile(ROOT_TSX_PATH, "utf8");
 
-      const importStmt = `import { ${compositionId} } from "${importPath}";`;
+      const usingDefaultTemplate = !tsxCode;
+      const importStmt = usingDefaultTemplate
+        ? `import { ${compositionId}, ${defaultsExport}, ${schemaExport} } from "${importPath}";`
+        : `import { ${compositionId} } from "${importPath}";`;
       if (!rootContent.includes(importStmt)) {
         rootContent = `${importStmt}\n${rootContent}`;
       }
 
-      const compJsx = `      <Composition
+      const compJsx = usingDefaultTemplate
+        ? `      <Composition
+        id="${compositionId}"
+        component={${compositionId}}
+        schema={${schemaExport}}
+        defaultProps={${defaultsExport}}
+        durationInFrames={${durationInFrames}}
+        fps={${fps}}
+        width={${width}}
+        height={${height}}
+      />`
+        : `      <Composition
         id="${compositionId}"
         component={${compositionId}}
         durationInFrames={${durationInFrames}}
