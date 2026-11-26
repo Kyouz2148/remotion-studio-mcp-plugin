@@ -1,6 +1,22 @@
-# Remotion Studio MCP — Plugin & Skill para Antigravity
+<p align="center">
+  <img src="./assets/antigravity.svg" alt="Antigravity" width="76" />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="./assets/remotion.svg" alt="Remotion" width="76" />
+</p>
 
-Conecte o **Antigravity** diretamente ao seu projeto **Remotion Studio** (local ou em um servidor remoto via **Streamable HTTP MCP**) para inspecionar mídias, editar composições `.tsx`, controlar uma timeline orientada a dados (`TimelineEditor`), capturar frames e renderizar vídeos direto no SSD onde o Remotion está rodando.
+<h1 align="center">Remotion Studio MCP — Plugin &amp; Skill para Antigravity</h1>
+
+<p align="center">
+  Conecte o <strong>Antigravity</strong> diretamente ao seu projeto <strong>Remotion Studio</strong> (local ou em um servidor remoto via <strong>Streamable HTTP MCP</strong>) para inspecionar mídias, editar composições <code>.tsx</code>, controlar uma timeline orientada a dados (<code>TimelineEditor</code>), capturar frames e renderizar vídeos direto no SSD onde o Remotion está rodando.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Antigravity-Plugin%20%2B%20Skill-3186FF?style=for-the-badge" alt="Antigravity Plugin" />
+  <img src="https://img.shields.io/badge/Remotion-4.x-0B84F3?style=for-the-badge" alt="Remotion" />
+  <img src="https://img.shields.io/badge/MCP-Streamable%20HTTP-10B981?style=for-the-badge" alt="MCP Streamable HTTP" />
+  <img src="https://img.shields.io/badge/Node.js-20%2B%20LTS-339933?style=for-the-badge" alt="Node.js" />
+  <img src="https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge" alt="MIT License" />
+</p>
 
 ---
 
