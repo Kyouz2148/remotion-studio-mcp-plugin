@@ -1,0 +1,12 @@
+node_modules/
+.env
+out/
+exports/
+*.mp4
+*.mov
+*.mkv
+*.mp3
+*.wav
+*.log
+.DS_Store
+Thumbs.db

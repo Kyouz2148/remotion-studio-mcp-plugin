@@ -1,0 +1,6 @@
+{
+  "name": "remotion-studio-mcp",
+  "displayName": "Remotion Studio MCP",
+  "version": "2.0.0",
+  "description": "Edita qualquer composição, código React/TSX, mídia, timeline e renderizações no Remotion Studio via Streamable HTTP MCP."
+}
